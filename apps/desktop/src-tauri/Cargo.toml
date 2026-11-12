@@ -3,7 +3,10 @@ name = "scrynx"
 version = "0.1.1"
 description = "Scrynx — the screenshot app with a built-in capture manager"
 authors = ["Scrynx"]
+license = "MIT"
 edition = "2024"
+repository = "https://github.com/DanielDiasK/scrynx"
+homepage = "https://github.com/DanielDiasK/scrynx"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

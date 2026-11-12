@@ -3,6 +3,20 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "description": "Scrynx — the screenshot app with a built-in capture manager (dashboard). Open-source, local-first.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielDiasK/scrynx.git"
+  },
+  "homepage": "https://github.com/DanielDiasK/scrynx",
+  "keywords": [
+    "screenshot",
+    "capture",
+    "desktop",
+    "tauri",
+    "open-source"
+  ],
   "workspaces": [
     "apps/*"
   ],
@@ -16,5 +30,8 @@
     "build:desktop": "cd apps/desktop && bun run build",
     "tauri": "cd apps/desktop && bunx tauri",
     "bump": "node scripts/bump.mjs"
+  },
+  "devDependencies": {
+    "yaml": "^2.9.1"
   }
 }

@@ -52,8 +52,22 @@ jobs:
             Write-Host "Release already exists — skipping (bump the version to ship a new one)"
           }
 
+      - name: Check updater signing key
+        id: key
+        shell: pwsh
+        env:
+          KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+        run: |
+          if ($env:KEY) {
+            "present=true" >> $env:GITHUB_OUTPUT
+            Write-Host "TAURI_PRIVATE_KEY is set — signed releases enabled."
+          } else {
+            "present=false" >> $env:GITHUB_OUTPUT
+            Write-Host "::warning::TAURI_PRIVATE_KEY secret is missing — skipping signed release. Add it under Settings → Secrets and variables → Actions."
+          }
+
       - name: Build & publish release via tauri-action
-        if: steps.check.outputs.released == 'true'
+        if: steps.check.outputs.released == 'true' && steps.key.outputs.present == 'true'
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

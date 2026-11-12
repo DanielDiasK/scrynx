@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Download, Menu, X } from "lucide-react";
+import { Download, Menu, X, CodeXml } from "lucide-react";
 import { useI18n } from "../i18n";
 import { LogoMark, Wordmark } from "../components/Logo";
 import { LangToggle } from "../components/LangToggle";
@@ -49,6 +49,16 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <a
+            href="https://github.com/DanielDiasK/scrynx"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Scrynx on GitHub"
+            title="Scrynx on GitHub"
+            className="icon-btn hidden sm:inline-flex"
+          >
+            <CodeXml size={17} strokeWidth={2.2} />
+          </a>
           <LangToggle />
           <ThemeToggle />
           <a

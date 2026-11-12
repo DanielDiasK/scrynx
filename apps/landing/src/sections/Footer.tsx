@@ -77,7 +77,14 @@ export function Footer() {
 
           <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-line/70 py-5 font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground sm:flex-row">
             <span>© 2026 Scrynx. {t.footer.rights}</span>
-            <span>{lang === "pt" ? "Feito no Brasil" : "Built for the desktop"}</span>
+            <a
+              href="https://github.com/DanielDiasK/scrynx"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-foreground"
+            >
+              {lang === "pt" ? "Código aberto (MIT) no GitHub" : "Open source (MIT) on GitHub"} →
+            </a>
           </div>
         </div>
 

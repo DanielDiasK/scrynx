@@ -1,7 +1,14 @@
 {
   "name": "scrynx-landing",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "description": "Scrynx landing page — the website of the open-source screenshot manager.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielDiasK/scrynx.git"
+  },
+  "homepage": "https://github.com/DanielDiasK/scrynx",
   "type": "module",
   "scripts": {
     "dev": "vite",

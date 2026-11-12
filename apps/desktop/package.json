@@ -2,6 +2,13 @@
   "name": "scrynx-desktop",
   "private": true,
   "version": "0.1.1",
+  "description": "Scrynx desktop app — an open-source screenshot tool with a built-in capture manager.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielDiasK/scrynx.git"
+  },
+  "homepage": "https://github.com/DanielDiasK/scrynx",
   "type": "module",
   "scripts": {
     "dev": "tauri dev",
