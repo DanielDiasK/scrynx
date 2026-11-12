@@ -29,7 +29,7 @@ export function ManagerSection() {
               </li>
             ))}
             <li className="pt-3">
-              <a href="#download" className="btn btn-gold h-14 rounded-2xl px-7 text-[15px]">
+              <a href="https://github.com/DanielDiasK/scrynx/releases/latest" className="btn btn-gold h-14 rounded-2xl px-7 text-[15px]">
                 <Download size={19} strokeWidth={2.6} />
                 {t.manager.cta}
               </a>

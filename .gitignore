@@ -1,3 +1,7 @@
+# Tauri updater signing keys — NEVER commit
+apps/desktop/tauri-keys.key
+apps/desktop/tauri-keys.key.pub
+
 # Logs
 logs
 *.log

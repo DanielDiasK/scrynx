@@ -12,11 +12,13 @@ import {
   ShieldCheck,
   UserRoundPlus,
   Check,
+  RefreshCw,
 } from "lucide-react";
 import { enable, disable, isEnabled } from "@tauri-apps/plugin-autostart";
 import { useI18n } from "../i18n";
 import type { Lang } from "../locales";
 import type { LocalProfile } from "../lib/bridge";
+import { getAppVersion, checkForUpdateStrict } from "../lib/bridge";
 
 const inTauri =
   typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
@@ -154,6 +156,28 @@ export function Settings({
   const [profileName, setProfileName] = useState(profile?.name ?? "");
   const [profileEmail, setProfileEmail] = useState(profile?.email ?? "");
   const [profileError, setProfileError] = useState(false);
+  const [appVersion, setAppVersion] = useState("0.1.0");
+  const [checking, setChecking] = useState(false);
+
+  useEffect(() => {
+    getAppVersion().then(setAppVersion);
+  }, []);
+
+  const manualCheck = async () => {
+    if (!inTauri) {
+      onNotify(t.settings.updateFailed);
+      return;
+    }
+    setChecking(true);
+    try {
+      const update = await checkForUpdateStrict();
+      onNotify(update ? t.settings.updateAvailable.replace("{v}", update.version) : t.settings.upToDate);
+    } catch {
+      onNotify(t.settings.updateFailed);
+    } finally {
+      setChecking(false);
+    }
+  };
 
   useEffect(() => {
     try {
@@ -552,6 +576,31 @@ export function Settings({
               )}
             </div>
           )}
+        </Section>
+
+        {/* Updates */}
+        <Section icon={RefreshCw} title={t.settings.updatesSection} desc={t.settings.updatesDesc}>
+          <Row
+            label={t.settings.currentVersion}
+            control={
+              <span className="rounded-full bg-card-2 px-3 py-1.5 font-mono text-[11px] font-black tabular-nums">
+                v{appVersion}
+              </span>
+            }
+          />
+          <Row
+            label={t.settings.checkUpdates}
+            control={
+              <button
+                onClick={manualCheck}
+                disabled={checking}
+                className="btn btn-tonal rounded-xl px-4 py-2 text-[10px] uppercase tracking-wide disabled:opacity-60"
+              >
+                <RefreshCw size={13} strokeWidth={2.5} className={checking ? "animate-spin" : ""} />
+                {checking ? t.settings.checkingUpdates : t.settings.checkUpdates}
+              </button>
+            }
+          />
         </Section>
 
         <p className="flex items-center justify-center gap-1.5 pb-4 font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-muted-foreground/60">

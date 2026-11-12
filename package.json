@@ -14,6 +14,7 @@
     "build": "cd apps/landing && bun run build && cd ../desktop && bun run build",
     "build:landing": "cd apps/landing && bun run build",
     "build:desktop": "cd apps/desktop && bun run build",
-    "tauri": "cd apps/desktop && bunx tauri"
+    "tauri": "cd apps/desktop && bunx tauri",
+    "bump": "node scripts/bump.mjs"
   }
 }

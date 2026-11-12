@@ -53,12 +53,46 @@ First `npm run dev` in `apps/desktop` takes a few minutes to compile the Rust
 backend; after that the native window opens in seconds. Use `dev:vite` only for
 quick frontend-only iteration in a browser.
 
+## Releases & auto-update
+
+The **Release** workflow (`.github/workflows/release.yml`) runs on every push to `main`:
+
+1. Reads `version` from `tauri.conf.json`.
+2. If a git tag `v<version>` already exists → **skips** (a code-only push does not ship).
+3. Otherwise builds the Windows installer, **signs** it with the updater private key and publishes a **GitHub Release** + `latest.json` manifest.
+4. Then it **rebuilds the landing** and deploys it to GitHub Pages (needs Pages enabled: repo → Settings → Pages → Source: GitHub Actions).
+
+### Shipping an update
+
+```sh
+bun run bump patch        # bumps tauri.conf.json + Cargo.toml + desktop package.json
+git add -A && git commit -m "chore: release vX.Y.Z" && git push
+```
+
+The workflow takes over: builds, signs, publishes. Users with an older version get a **gold banner** on next launch ("Scrynx vX.Y.Z disponível") — one click installs it (the app restarts on NSIS). Settings also has "Atualizações → Verificar agora".
+
+### One-time setup (maintainer)
+
+Add repo secrets (Settings → Secrets and variables → Actions):
+
+- `TAURI_PRIVATE_KEY` — content of `apps/desktop/tauri-keys.key` (never committed)
+- `TAURI_KEY_PASSWORD` — the key password
+
+### Auto-update on a **private** repo — honest status
+
+GitHub's `releases/latest/download/latest.json` endpoint requires *authentication* when the repo is private. The client updater ships no credentials, so:
+
+- CI/releases/pages all work with the `GITHUB_TOKEN` from Actions ✅
+- The in-app auto-update **only works once the repo is public** (or you host the manifest publicly elsewhere) ✅ one toggle, no code changes needed — the config already points there
+
+If you want a public update channel while keeping the repo private, publish `apps/desktop/src-tauri/tauri.conf.json`'s endpoint behind any public HTTPS URL serving `latest.json`.
+
 ## Notes
 
 - **Capture flow (Windows Snipping-Tool style):** `Ctrl+Shift+S` — even with Scrynx hidden — opens a fullscreen overlay: the frozen screen is dimmed, a badge on top offers **Area** (drag a selection) or **Full screen** (one click), Esc cancels. The shot is saved to your chosen capture folder and immediately appears in the library (real thumbnails, real stats). A small preview floats bottom-right for a few seconds (disable in Ajustes).
-- The desktop app currently ships with **mocked account/dashboard data** being phased out — captures, storage stats, chart, activity feed and favorites are all real, local-first.
+- Account/profile is **local-first** (name + email stored locally, no server) — cloud sync arrives with the Pro plan.
 - Both apps support **English** and **Português (Brasil)** — toggle in the UI (top-right of the landing, sidebar of the app, or Ajustes). Language choice persists.
-- Design system: **neo-brutalism** on the **shadcn neutral palette** — light **and** dark mode (toggle in the UI, persisted, defaults to your OS preference), 2px borders, hard offset shadows, rounded corners, Archivo Black / Archivo / IBM Plex Mono (landing).
+- Design system: **shared fintech language** with the desktop app — Manrope, tonal surfaces, gold/purple/lime accents, rounded corners, light and dark mode (persisted; defaults to your OS preference).
 
 ## App icons
 

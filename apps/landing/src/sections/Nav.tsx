@@ -52,7 +52,7 @@ export function Nav() {
           <LangToggle />
           <ThemeToggle />
           <a
-            href="#download"
+            href="https://github.com/DanielDiasK/scrynx/releases/latest"
             className="btn btn-gold hidden h-10 items-center gap-1.5 rounded-full px-5 text-[13px] md:inline-flex"
           >
             <Download size={15} strokeWidth={2.6} />
@@ -84,7 +84,7 @@ export function Nav() {
               </a>
             ))}
             <a
-              href="#download"
+              href="https://github.com/DanielDiasK/scrynx/releases/latest"
               onClick={() => setOpen(false)}
               className="btn btn-gold w-full justify-center px-4 py-3.5 text-sm"
             >

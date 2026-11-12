@@ -51,6 +51,55 @@ export function defaultCaptureDir(): Promise<string> {
   return invoke<string>("default_capture_dir");
 }
 
+/* ------------------------------ Auto-update ------------------------------ */
+
+/** App version from Tauri (single source of truth: tauri.conf.json). */
+export async function getAppVersion(): Promise<string> {
+  if (!inTauri) return "0.1.0";
+  try {
+    const { getVersion } = await import("@tauri-apps/api/app");
+    return await getVersion();
+  } catch {
+    return "0.1.0";
+  }
+}
+
+/**
+ * Check GitHub Releases for a newer version.
+ * Returns `null` for "up to date" AND for any failure (offline, private repo, etc.).
+ * Use `checkForUpdate({ throwOnError: true })` in Settings to see real errors.
+ */
+export async function checkForUpdate(): Promise<{ version: string } | null> {
+  if (!inTauri) return null;
+  try {
+    const { check } = await import("@tauri-apps/plugin-updater");
+    const update = await check();
+    return update ? { version: update.version } : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function installUpdate(): Promise<"installed" | "none" | "error"> {
+  if (!inTauri) return "error";
+  try {
+    const { check } = await import("@tauri-apps/plugin-updater");
+    const update = await check();
+    if (!update) return "none";
+    await update.downloadAndInstall();
+    return "installed";
+  } catch {
+    return "error";
+  }
+}
+
+/** Like checkForUpdate but throws on failure — for the Settings "check now" button. */
+export async function checkForUpdateStrict(): Promise<{ version: string } | null> {
+  const { check } = await import("@tauri-apps/plugin-updater");
+  const update = await check();
+  return update ? { version: update.version } : null;
+}
+
 export function captureScreen(
   dir: string,
   format: string,

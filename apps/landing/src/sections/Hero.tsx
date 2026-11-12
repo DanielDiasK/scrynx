@@ -48,7 +48,7 @@ export function Hero() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="#download" className="btn btn-gold h-14 rounded-2xl px-6 text-[15px]">
+              <a href="https://github.com/DanielDiasK/scrynx/releases/latest" className="btn btn-gold h-14 rounded-2xl px-6 text-[15px]">
                 <Download size={19} strokeWidth={2.5} />
                 <span className="leading-tight">
                   {t.hero.ctaPrimary}

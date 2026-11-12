@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Scrynx",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "identifier": "com.scrynx.app",
   "build": {
     "beforeDevCommand": "bun run dev:vite",
@@ -25,13 +25,30 @@
       "csp": null,
       "assetProtocol": {
         "enable": true,
-        "scope": ["**"]
+        "scope": [
+          "**"
+        ]
       }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://github.com/DanielDiasK/scrynx/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      },
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDMzMkRERUYxREY2QkQxNUUKUldSZTBXdmY4ZDR0TStseVYrdVNtQ2ZYS2Vqb2taU2ZBRGFXVCtOSVN1WlJjVWM1TGprcHJ5NEQK"
     }
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
+    "targets": [
+      "nsis"
+    ],
+    "createUpdaterArtifacts": true,
     "windows": {
       "nsis": {
         "installMode": "currentUser",

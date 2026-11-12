@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CheckCircle2, Maximize2, X } from "lucide-react";
+import { CheckCircle2, Maximize2, X, ArrowUpCircle } from "lucide-react";
 import { LanguageProvider, useI18n } from "./i18n";
 import { LogoMark } from "./components/Logo";
 import { Sidebar, type Page } from "./components/Sidebar";
@@ -33,6 +33,8 @@ import {
   logActivity,
   setFavorite,
   fileSrc,
+  checkForUpdate,
+  installUpdate,
 } from "./lib/bridge";
 
 const FALLBACK_DIR = "C:\\Users\\Administrator\\Pictures\\Scrynx";
@@ -120,6 +122,8 @@ function Shell({
   const lastShortcutRef = useRef(0);
   const [previewCapture, setPreviewCapture] = useState<CaptureMeta | null>(null);
   const previewTimer = useRef<number | undefined>(undefined);
+  const [updateVersion, setUpdateVersion] = useState<string | null>(null);
+  const [installingUpdate, setInstallingUpdate] = useState(false);
   const [collapseOverride, setCollapseOverride] = useState<boolean | null>(() => {
     const v = localStorage.getItem("scrynx-sidebar-collapsed");
     return v === null ? null : v === "1";
@@ -191,6 +195,29 @@ function Shell({
     void refreshCaptures();
     void refreshActivity();
   }, [refreshCaptures, refreshActivity]);
+
+  // Silent update check on startup — banner appears only if an update exists
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const update = await checkForUpdate();
+      if (!cancelled && update) setUpdateVersion(update.version);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const handleInstallUpdate = useCallback(async () => {
+    setInstallingUpdate(true);
+    const result = await installUpdate();
+    setInstallingUpdate(false);
+    if (result === "installed") {
+      notify(t.toasts.updateInstalled);
+    } else if (result === "error") {
+      notify(t.settings.updateFailed);
+    }
+  }, [notify, t]);
 
   // Re-sync when the window regains focus (e.g. files changed in Explorer)
   useEffect(() => {
@@ -491,6 +518,21 @@ function Shell({
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden bg-background text-foreground">
       <TitleBar />
+      {updateVersion && (
+        <div className="flex h-10 shrink-0 items-center justify-center gap-3 border-b border-gold/40 bg-gold px-4 text-[#16130c]">
+          <ArrowUpCircle size={15} strokeWidth={2.6} />
+          <span className="text-[11px] font-extrabold">
+            {t.settings.updateBanner.replace("{v}", updateVersion)}
+          </span>
+          <button
+            onClick={handleInstallUpdate}
+            disabled={installingUpdate}
+            className="flex items-center gap-1.5 rounded-full bg-[#16130c] px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-gold transition-transform hover:scale-[1.03] disabled:opacity-60"
+          >
+            {installingUpdate ? "…" : t.settings.updateBannerCta}
+          </button>
+        </div>
+      )}
       <div className="flex min-h-0 flex-1 overflow-hidden">
       <Sidebar                                                          
         page={page}

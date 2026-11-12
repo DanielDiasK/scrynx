@@ -88,7 +88,7 @@ export function Pricing() {
                 </div>
 
                 <a
-                  href="#download"
+                  href="https://github.com/DanielDiasK/scrynx/releases/latest"
                   className={`btn mt-6 w-full justify-center rounded-2xl px-4 py-3.5 text-[12px] uppercase tracking-wide ${
                     highlighted ? "btn-gold" : "btn-tonal"
                   }`}

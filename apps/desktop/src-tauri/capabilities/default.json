@@ -26,6 +26,7 @@
     "core:window:allow-is-maximized",
     "core:window:allow-is-minimized",
     "core:event:allow-emit",
-    "core:event:allow-listen"
+    "core:event:allow-listen",
+    "updater:default"
   ]
 }

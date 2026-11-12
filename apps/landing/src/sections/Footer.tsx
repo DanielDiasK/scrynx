@@ -25,7 +25,7 @@ export function Footer() {
           <p className="mx-auto mt-5 max-w-md text-[15px] font-medium text-white/60">
             {t.finalCta.sub}
           </p>
-          <a href="#download" className="btn btn-gold mt-9 h-14 rounded-2xl px-8 text-base">
+          <a href="https://github.com/DanielDiasK/scrynx/releases/latest" className="btn btn-gold mt-9 h-14 rounded-2xl px-8 text-base">
             <Download size={19} strokeWidth={2.6} />
             {t.finalCta.cta}
           </a>
@@ -58,7 +58,11 @@ export function Footer() {
                     {col.links.map((link) => (
                       <li key={link}>
                         <a
-                          href="#"
+                          href={
+                            link === "Download"
+                              ? "https://github.com/DanielDiasK/scrynx/releases/latest"
+                              : "#"
+                          }
                           className="text-[13px] font-semibold text-foreground/80 transition-colors hover:text-foreground"
                         >
                           {link}

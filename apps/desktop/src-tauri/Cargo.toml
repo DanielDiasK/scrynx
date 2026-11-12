@@ -1,6 +1,6 @@
 [package]
 name = "scrynx"
-version = "0.1.0"
+version = "0.1.1"
 description = "Scrynx — the screenshot app with a built-in capture manager"
 authors = ["Scrynx"]
 edition = "2024"
@@ -31,6 +31,7 @@ tauri-plugin-store = "2.5.1"
 tauri-plugin-dialog = "2.8.4"
 tauri-plugin-global-shortcut = "2.4.1"
 base64 = "0.23.1"
+tauri-plugin-updater = "2.14.1"
 
 
 # Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
