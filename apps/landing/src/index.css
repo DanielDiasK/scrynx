@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/manrope-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/manrope-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+/* ============ Fintech tokens — same system as the desktop app ============ */
+:root {
+  --background: 40 7% 89%;
+  --card: 0 0% 100%;
+  --card-2: 40 7% 95%;
+  --foreground: 240 8% 11%;
+  --muted-foreground: 240 4% 45%;
+  --line: 240 5% 88%;
+  --gold: 41 92% 68%;
+  --purple: 265 84% 68%;
+  --lime: 74 84% 66%;
+  --coral: 0 72% 62%;
+  --positive: 145 63% 55%;
+  --accent: var(--gold);
+  --accent-foreground: 36 30% 12%;
+  --shadow: 0 18px 44px rgb(23 23 30 / 0.14);
+  --shadow-sm: 0 6px 18px rgb(23 23 30 / 0.1);
+  --radius: 1.4rem;
+}
+.dark {
+  --background: 240 9% 8%;
+  --card: 240 9% 12%;
+  --card-2: 240 8% 16%;
+  --foreground: 40 10% 93%;
+  --muted-foreground: 240 5% 56%;
+  --line: 240 6% 17%;
+  --gold: 41 88% 69%;
+  --purple: 265 80% 70%;
+  --lime: 75 82% 66%;
+  --coral: 0 72% 66%;
+  --positive: 145 55% 55%;
+  --accent: var(--gold);
+  --accent-foreground: 36 30% 12%;
+  --shadow: 0 22px 54px rgb(0 0 0 / 0.5);
+  --shadow-sm: 0 8px 24px rgb(0 0 0 / 0.4);
+}
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-card: hsl(var(--card));
+  --color-card-2: hsl(var(--card-2));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-line: hsl(var(--line));
+  --color-gold: hsl(var(--gold));
+  --color-purple: hsl(var(--purple));
+  --color-lime: hsl(var(--lime));
+  --color-coral: hsl(var(--coral));
+  --color-positive: hsl(var(--positive));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: hsl(var(--gold));
+  color: hsl(var(--accent-foreground));
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.4);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============ Fintech utilities ============ */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-inset {
+  background: var(--color-card-2);
+  border-radius: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.18s ease, filter 0.18s ease, background-color 0.18s ease,
+    color 0.18s ease;
+}
+.btn:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-gold {
+  background: hsl(var(--gold));
+  color: #1a1710;
+}
+.btn-purple {
+  background: hsl(var(--purple));
+  color: #fff;
+}
+.btn-lime {
+  background: hsl(var(--lime));
+  color: #1a2410;
+}
+.btn-dark {
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+}
+.btn-tonal {
+  background: var(--color-card-2);
+  color: var(--color-foreground);
+}
+.btn-tonal:hover {
+  background: hsl(var(--muted-foreground) / 0.25);
+}
+
+.circle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: 999px;
+  background: var(--color-card-2);
+  color: var(--color-foreground);
+  transition: background-color 0.16s ease, transform 0.16s ease;
+  cursor: pointer;
+}
+.circle-btn:hover {
+  background: hsl(var(--muted-foreground) / 0.25);
+  transform: translateY(-1px);
+}
+.circle-btn:active {
+  transform: translateY(1px);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted-foreground);
+  transition: background-color 0.16s ease, color 0.16s ease;
+  cursor: pointer;
+}
+.icon-btn:hover {
+  background: var(--color-card-2);
+  color: var(--color-foreground);
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.45rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-card-2);
+  color: var(--color-foreground);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+.stat-gold { background: hsl(var(--gold)); color: #16130c; }
+.stat-purple { background: hsl(var(--purple)); color: #fff; }
+.stat-lime { background: hsl(var(--lime)); color: #1a2410; }
+
+.glow-ring {
+  box-shadow: 0 0 0 1px hsl(var(--gold) / 0.4), var(--shadow);
+}
+
+.text-outline {
+  -webkit-text-stroke: 2px hsl(var(--foreground));
+  color: transparent;
+}
+.dark .text-outline {
+  -webkit-text-stroke: 2px hsl(var(--foreground));
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 34s linear infinite;
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float-soft {
+  animation: float-soft 6.5s ease-in-out infinite;
+}

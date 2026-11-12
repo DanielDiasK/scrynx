@@ -1,0 +1,19 @@
+{
+  "name": "scrynx",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:app": "cd apps/desktop && bunx tauri dev",
+    "build:app": "cd apps/desktop && bunx tauri build",
+    "dev:landing": "cd apps/landing && bun run dev",
+    "dev:desktop": "cd apps/desktop && bun run dev",
+    "build": "cd apps/landing && bun run build && cd ../desktop && bun run build",
+    "build:landing": "cd apps/landing && bun run build",
+    "build:desktop": "cd apps/desktop && bun run build",
+    "tauri": "cd apps/desktop && bunx tauri"
+  }
+}
